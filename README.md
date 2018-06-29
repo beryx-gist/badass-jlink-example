@@ -10,7 +10,7 @@ The plugin is configured in `build.gradle` as follows:
 
 ```
 plugins {
-    id 'org.beryx.jlink' version '1.0.1'
+    id 'org.beryx.jlink' version '1.0.2'
 }
 
 jlink {
