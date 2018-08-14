@@ -34,4 +34,21 @@ jlink {
         requires 'java.xml';
         requires 'java.xml.bind';
     }
+    beforeZip {
+        copy {
+            from('src/main/resources')
+            into("$buildDir/image/bin")
+        }
+        adjustStartScripts()
+    }
+}
+
+def adjustStartScripts() {
+    ['hello', 'hello.bat'].each { script ->
+        def scriptFile = new File("$buildDir/image/bin/$script")
+        if(scriptFile.file) {
+            def newText = scriptFile.text.replace('JLINK_VM_OPTIONS=', 'JLINK_VM_OPTIONS="-Dlogback.configurationFile=./logback.xml"')
+            scriptFile.newWriter().withWriter {w -> w << newText}
+        }
+    }
 }
