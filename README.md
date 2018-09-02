@@ -10,7 +10,7 @@ The plugin is configured in `build.gradle` as follows:
 
 ```
 plugins {
-    id 'org.beryx.jlink' version '1.0.2'
+    id 'org.beryx.jlink' version '1.4.2'
 }
 
 jlink {
@@ -18,7 +18,6 @@ jlink {
     mergedModule {
         requires 'java.naming';
         requires 'java.xml';
-        requires 'java.xml.bind';
     }
 }
 ```
