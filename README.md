@@ -10,14 +10,17 @@ The plugin is configured in `build.gradle` as follows:
 
 ```
 plugins {
-    id 'org.beryx.jlink' version '1.4.2'
+    id 'org.beryx.jlink' version '2.0.1'
 }
 
 jlink {
-    launcherName = 'hello'
     mergedModule {
-        requires 'java.naming';
-        requires 'java.xml';
+        requires 'java.naming'
+        requires 'java.xml'
+    }
+    launcher{
+        name = 'hello'
+        jvmArgs = ['-Dlogback.configurationFile=./logback.xml']
     }
 }
 ```
