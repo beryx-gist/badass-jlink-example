@@ -1,5 +1,6 @@
 plugins {
-    id 'org.beryx.jlink' version '1.4.3'
+    id 'org.beryx.jlink' version '2.0.1'
+    id 'com.zyxist.chainsaw' version '0.3.1'
 }
 
 repositories {
@@ -23,16 +24,14 @@ jar {
     }
 }
 
-compileJava {
-    options.compilerArgs = ['--module-path', classpath.asPath]
-    classpath = files()
-}
-
 jlink {
-    launcherName = 'hello'
     mergedModule {
-        requires 'java.naming';
-        requires 'java.xml';
+        requires 'java.naming'
+        requires 'java.xml'
+    }
+    launcher{
+        name = 'hello'
+        jvmArgs = ['-Dlogback.configurationFile=./logback.xml']
     }
 }
 
@@ -40,16 +39,5 @@ tasks.jlink.doLast {
     copy {
         from('src/main/resources')
         into("$buildDir/image/bin")
-    }
-    adjustStartScripts()
-}
-
-def adjustStartScripts() {
-    ['hello', 'hello.bat'].each { script ->
-        def scriptFile = new File("$buildDir/image/bin/$script")
-        if(scriptFile.file) {
-            def newText = scriptFile.text.replace('JLINK_VM_OPTIONS=', 'JLINK_VM_OPTIONS="-Dlogback.configurationFile=./logback.xml"')
-            scriptFile.newWriter().withWriter {w -> w << newText}
-        }
     }
 }
