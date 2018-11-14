@@ -17,7 +17,7 @@ dependencies {
     compile 'javax.xml.bind:jaxb-api:2.3.0'
 }
 
-mainClassName = 'org.beryx.modular.hello.Hello'
+mainClassName = 'org.beryx.modular.hello/org.beryx.modular.hello.Hello'
 jar {
     manifest {
         attributes 'Implementation-Title': "modular-hello",
