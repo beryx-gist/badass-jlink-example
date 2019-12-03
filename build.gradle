@@ -1,6 +1,6 @@
 plugins {
-    id 'org.beryx.jlink' version '2.4.1'
-    id "org.javamodularity.moduleplugin" version "1.1.1"
+    id "org.beryx.jlink" version "2.16.4"
+    id "org.javamodularity.moduleplugin" version "1.6.0"
 }
 
 repositories {
@@ -11,9 +11,9 @@ sourceCompatibility = 11
 targetCompatibility = 11
 
 dependencies {
-    compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'javax.xml.bind:jaxb-api:2.3.0'
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
 }
 
 mainClassName = 'org.beryx.modular.hello/org.beryx.modular.hello.Hello'
