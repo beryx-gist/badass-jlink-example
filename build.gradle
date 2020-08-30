@@ -1,14 +1,14 @@
 plugins {
-    id "org.beryx.jlink" version "2.16.4"
-    id "org.javamodularity.moduleplugin" version "1.6.0"
+    id "org.javamodularity.moduleplugin" version "1.7.0"
+    id "org.beryx.jlink" version "2.21.3"
 }
 
 repositories {
     mavenCentral()
 }
 
-sourceCompatibility = 11
-targetCompatibility = 11
+sourceCompatibility = 14
+targetCompatibility = 14
 
 dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.25'
@@ -16,7 +16,12 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
 }
 
-mainClassName = 'org.beryx.modular.hello/org.beryx.modular.hello.Hello'
+application {
+    mainClass = 'org.beryx.modular.hello.Hello'
+    mainModule = 'org.beryx.modular.hello'
+    applicationDefaultJvmArgs += ['--enable-preview', '-Dlogback.configurationFile=./logback.xml']
+}
+
 jar {
     manifest {
         attributes 'Implementation-Title': "modular-hello",
@@ -24,14 +29,25 @@ jar {
     }
 }
 
+tasks.withType(JavaCompile) {
+    options.compilerArgs += "--enable-preview"
+}
+
 jlink {
     mergedModule {
+        version = '5.5.5'
         requires 'java.naming'
         requires 'java.xml'
     }
     launcher{
         name = 'hello'
-        jvmArgs = ['-Dlogback.configurationFile=./logback.xml']
+        jvmArgs = ['--enable-preview', '-Dlogback.configurationFile=./logback.xml']
+    }
+    jpackage {
+        if(org.gradle.internal.os.OperatingSystem.current().windows) {
+            imageOptions += ['--win-console']
+            installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
+        }
     }
 }
 

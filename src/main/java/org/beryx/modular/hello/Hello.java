@@ -7,6 +7,10 @@ public class Hello {
 	private static final Logger logger = LoggerFactory.getLogger(Hello.class);
 
 	public static void main(String[] args) {
-		logger.info("Hello, modular Java!");
+		logger.info("""
+				Hello,
+				I'm a text block.
+				I'm still a preview feature in Java 14.
+				""");
 	}
 }
