@@ -1,6 +1,6 @@
 plugins {
-    id "org.beryx.jlink" version "2.16.4"
-    id "org.javamodularity.moduleplugin" version "1.6.0"
+    id "org.beryx.jlink" version "2.24.1"
+    id "org.javamodularity.moduleplugin" version "1.8.9"
 }
 
 repositories {
@@ -16,7 +16,11 @@ dependencies {
     implementation 'javax.xml.bind:jaxb-api:2.3.0'
 }
 
-mainClassName = 'org.beryx.modular.hello/org.beryx.modular.hello.Hello'
+application {
+    mainClass = 'org.beryx.modular.hello.Hello'
+    mainModule = 'org.beryx.modular.hello'
+}
+
 jar {
     manifest {
         attributes 'Implementation-Title': "modular-hello",
@@ -32,6 +36,12 @@ jlink {
     launcher{
         name = 'hello'
         jvmArgs = ['-Dlogback.configurationFile=./logback.xml']
+    }
+    jpackage {
+        if (org.gradle.internal.os.OperatingSystem.current().windows) {
+            installerOptions += ['--win-per-user-install', '--win-dir-chooser', '--win-menu', '--win-shortcut']
+            imageOptions += ['--win-console']
+        }
     }
 }
 
